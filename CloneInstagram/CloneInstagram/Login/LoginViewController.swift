@@ -19,9 +19,12 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        configBackground()
     }
 
+    private func configBackground() {
+        view.backgroundColor = .background
+    }
 
 }
 
