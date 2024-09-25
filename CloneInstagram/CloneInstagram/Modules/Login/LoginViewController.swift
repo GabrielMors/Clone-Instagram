@@ -14,7 +14,6 @@ class LoginViewController: UIViewController {
     override func loadView() {
         screen = LoginScreen()
         view = screen
-        view.backgroundColor = .white
     }
     
     override func viewWillAppear(_ animated: Bool) {

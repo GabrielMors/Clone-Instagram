@@ -22,9 +22,10 @@ class LoginScreen: UIView {
         textField.placeholder = "Phone number, username or email adress"
         textField.clipsToBounds = true
         textField.layer.cornerRadius = 5
-        textField.backgroundColor = .systemGray6
+        textField.backgroundColor = .gray1
         textField.keyboardType = .emailAddress
         textField.textColor = .darkGray
+        textField.borderStyle = .roundedRect
         return textField
     }()
     
@@ -34,7 +35,7 @@ class LoginScreen: UIView {
         textField.placeholder = "Password"
         textField.clipsToBounds = true
         textField.layer.cornerRadius = 5
-        textField.backgroundColor = .systemGray6
+        textField.backgroundColor = .gray1
         textField.keyboardType = .default
         textField.textColor = .darkGray
         textField.borderStyle = .roundedRect
@@ -45,7 +46,7 @@ class LoginScreen: UIView {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Forgotten Password?", for: .normal)
-        button.setTitleColor(.blue, for: .normal)
+        button.setTitleColor(.lightBlue, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         return button
     }()
@@ -56,8 +57,9 @@ class LoginScreen: UIView {
         button.setTitle("Login", for: .normal)
         button.clipsToBounds = true
         button.layer.cornerRadius = 5
-        button.backgroundColor = .blue
-        button.tintColor = .white
+        button.backgroundColor = .lightBlue
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
         return button
     }()
     
@@ -72,16 +74,24 @@ class LoginScreen: UIView {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Login with facebook", for: .normal)
-        button.setTitleColor(.blue, for: .normal)
+        button.setTitleColor(.lightBlue, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
         return button
+    }()
+    
+    lazy var separatorImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "separator")
+        return imageView
     }()
     
     lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Don't have an account?"
-        label.textColor = .systemGray3
+        label.textColor = .gray2
+        label.font = .systemFont(ofSize: 14, weight: .regular)
         return label
     }()
     
@@ -89,9 +99,16 @@ class LoginScreen: UIView {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Sign Up.", for: .normal)
-        button.setTitleColor(.blue, for: .normal)
+        button.setTitleColor(.lightBlue, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         return button
+    }()
+    
+    lazy var infoImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "info")
+        return imageView
     }()
     
     override init(frame: CGRect) {
@@ -108,8 +125,10 @@ class LoginScreen: UIView {
         addSubview(loginButton)
         addSubview(facebookImageView)
         addSubview(facebookButton)
+        addSubview(separatorImageView)
         addSubview(descriptionLabel)
         addSubview(signUpButton)
+        addSubview(infoImageView)
     }
     
     required init?(coder: NSCoder) {
@@ -119,7 +138,7 @@ class LoginScreen: UIView {
     private func configConstraints() {
         NSLayoutConstraint.activate([
             
-            logoImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 50),
+            logoImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 80),
             logoImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             logoImageView.heightAnchor.constraint(equalToConstant: 49),
             logoImageView.widthAnchor.constraint(equalToConstant: 182),
@@ -139,24 +158,35 @@ class LoginScreen: UIView {
             forgottenPassword.heightAnchor.constraint(equalToConstant: 30),
             
             loginButton.topAnchor.constraint(equalTo: forgottenPassword.bottomAnchor, constant: 30),
-            loginButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 15),
-            loginButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -15),
+            loginButton.leadingAnchor.constraint(equalTo: emailTextField.leadingAnchor),
+            loginButton.trailingAnchor.constraint(equalTo: emailTextField.trailingAnchor),
             loginButton.heightAnchor.constraint(equalToConstant: 44),
             
             facebookButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 40),
-            facebookButton.leadingAnchor.constraint(equalTo: facebookImageView.trailingAnchor),
-            facebookButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            facebookButton.leadingAnchor.constraint(equalTo: facebookImageView.trailingAnchor, constant: 8),
+            facebookButton.centerXAnchor.constraint(equalTo: loginButton.centerXAnchor),
             
-            facebookImageView.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 40),
-//            facebookImageView.trailingAnchor.constraint(equalTo: facebookButton.leadingAnchor, constant: 4),
+            facebookImageView.centerYAnchor.constraint(equalTo: facebookButton.centerYAnchor),
             facebookImageView.heightAnchor.constraint(equalToConstant: 17),
             facebookImageView.widthAnchor.constraint(equalToConstant: 17),
             
-            descriptionLabel.topAnchor.constraint(equalTo: facebookButton.bottomAnchor, constant: 70),
-            descriptionLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            separatorImageView.topAnchor.constraint(equalTo: facebookButton.bottomAnchor, constant: 40),
+            separatorImageView.leadingAnchor.constraint(equalTo: emailTextField.leadingAnchor),
+            separatorImageView.trailingAnchor.constraint(equalTo: emailTextField.trailingAnchor),
+            separatorImageView.heightAnchor.constraint(equalToConstant: 14),
+            
+            descriptionLabel.topAnchor.constraint(equalTo: separatorImageView.bottomAnchor, constant: 40),
+            descriptionLabel.centerXAnchor.constraint(equalTo: separatorImageView.centerXAnchor),
             
             signUpButton.leadingAnchor.constraint(equalTo: descriptionLabel.trailingAnchor, constant: -8),
             signUpButton.centerYAnchor.constraint(equalTo: descriptionLabel.centerYAnchor),
+            signUpButton.heightAnchor.constraint(equalToConstant: 17),
+            signUpButton.widthAnchor.constraint(equalToConstant: 80),
+            
+            infoImageView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: 0),
+            infoImageView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            infoImageView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: 0),
+            infoImageView.heightAnchor.constraint(equalToConstant: 70)
         ])
     }
     
